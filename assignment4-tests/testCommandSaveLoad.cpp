@@ -6,7 +6,7 @@
 #include "mockViewHandler.cpp"
 
 //load a file that doesn't exist
-TEST(CommandLoad, loadBad) {
+TEST(SaveLoad, loadBad) {
   MockViewHandler mockViewHandler;
   GameManager game(10, 10, mockViewHandler);
   std::vector<std::string> args = {"doesntExist.fld"};
@@ -18,7 +18,7 @@ TEST(CommandLoad, loadBad) {
 }
 
 //save a test file
-TEST(CommandSave, saveTest) {
+TEST(SaveLoad, createTest) {
   MockViewHandler mockViewHandler;
   GameManager game(10, 10, mockViewHandler);
   std::vector<std::string> args = {"testFile1.fld"};
@@ -30,7 +30,7 @@ TEST(CommandSave, saveTest) {
 }
 
 //load a test file
-TEST(CommandLoad, loadTest) {
+TEST(SaveLoad, loadTest) {
   MockViewHandler mockViewHandler;
   GameManager game(10, 10, mockViewHandler);
   std::vector<std::string> args = {"testFile1.fld"};
@@ -42,7 +42,7 @@ TEST(CommandLoad, loadTest) {
 }
 
 //save a file with no name
-TEST(CommandSave, saveNone) {
+TEST(SaveLoad, createEmptyFile) {
   MockViewHandler mockViewHandler;
   GameManager game(10, 10, mockViewHandler);
   std::vector<std::string> args = {};             //array empty?
@@ -54,7 +54,7 @@ TEST(CommandSave, saveNone) {
 }
 
 //load a file with no name
-TEST(CommandLoad, loadNone) {
+TEST(SaveLoad, loadEmptyFile) {
   MockViewHandler mockViewHandler;
   GameManager game(10, 10, mockViewHandler);
   std::vector<std::string> args = {};             //array empty?
