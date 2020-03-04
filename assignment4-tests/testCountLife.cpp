@@ -15,5 +15,69 @@ TEST(CountLife, CountCircle) {
     game.setCellAt(2,1);
     game.setCellAt(2,2);
     game.setCellAt(2,2);    // required to update prev field for countLifeAround
-    ASSERT_EQ(8, game.countLifeAround(1, 1));
+    ASSERT_EQ(game.countLifeAround(1, 1), 8);
 }
+
+TEST(CountLife, CountNothing) {
+    MockViewHandler mockViewHandler;
+    GameManager game(5, 5, mockViewHandler);
+    game.setCellAt(4, 4);
+    ASSERT_EQ(game.countLifeAround(1, 1), 0);
+}
+
+TEST(CountLife, CountLooping) {
+    //  ....#
+    //  .....
+    //  .....
+    //  .....
+    //  ....#
+    MockViewHandler mockViewHandler;
+    GameManager game(5, 5, mockViewHandler);
+    game.setCellAt(-1, 0);
+    game.setCellAt(-1, -1); // both of these cells are adjacent due to looping rules
+    game.setCellAt(3, 3);
+    ASSERT_EQ(game.countLifeAround(0, 0), 2);
+    ASSERT_EQ(game.countLifeAround(0, 4), 2);
+    ASSERT_EQ(game.countLifeAround(4, 0), 1); // on the top right one, so it doesnt count it
+    ASSERT_EQ(game.countLifeAround(1, 1), 0);
+}
+
+TEST(CountLife, DoesntCountSelf) {
+    MockViewHandler mockViewHandler;
+    GameManager game(5, 5, mockViewHandler);
+    game.setCellAt(1, 1);
+    game.setCellAt(3, 3);
+    ASSERT_EQ(game.countLifeAround(1, 1), 0);
+}
+
+TEST(CountLife, CountCorners) {
+    //  .#..#
+    //  ##..#
+    //  .....
+    //  .....
+    //  ##..#
+    MockViewHandler mockViewHandler;
+    GameManager game(5, 5, mockViewHandler);
+    game.setCellAt(0, 1);
+    game.setCellAt(1, 0);
+    game.setCellAt(4, 0);
+    game.setCellAt(0, 4);
+    game.setCellAt(1, 1);
+    game.setCellAt(4, 4);
+    game.setCellAt(1, 4);
+    game.setCellAt(4, 1);
+    game.setCellAt(3, 3);
+    ASSERT_EQ(game.countLifeAround(0, 0), 8);
+}
+
+// This test found a bug where the game will segfault if the field is smaller than 3x3 and you try to countLifeAround.
+// It happens both in game, and when testing, so this case is commented out so it doesn't crash the other tests until it is fixed
+
+/**
+TEST(CountLife, CountSmall) {
+    MockViewHandler mockViewHandler;
+    GameManager game(1, 1, mockViewHandler);
+    game.setCellAt(0, 0);
+    ASSERT_EQ(game.countLifeAround(0, 0), 0);
+}
+*/
