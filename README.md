@@ -93,7 +93,7 @@ Use the [Homebrew](https://brew.sh) package manager:
 
 Getting the source files:
 
-`git clone https://github.com/kirpichik/GameOfLife-Curses.git`
+`git clone https://github.com/Andrey-Korn/GameOfLife-Curses.git`
 
 Go to the dirrectory:
 
@@ -109,7 +109,7 @@ Building game executable:
 
 Running tests:
 
-`./GameOfLifeTests`
+`./Assignment4Test`
 
 Launch the Game!
 
