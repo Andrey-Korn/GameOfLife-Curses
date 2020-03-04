@@ -10,6 +10,7 @@ TEST(CountLife, CountCircle) {
     game.setCellAt(0,1);
     game.setCellAt(0,2);
     game.setCellAt(1,0);
+    game.setCellAt(1,1);
     game.setCellAt(1,2);
     game.setCellAt(2,0);
     game.setCellAt(2,1);
@@ -23,6 +24,10 @@ TEST(CountLife, CountNothing) {
     GameManager game(5, 5, mockViewHandler);
     game.setCellAt(4, 4);
     ASSERT_EQ(game.countLifeAround(1, 1), 0);
+    ASSERT_EQ(game.countLifeAround(0, 0), 0);
+    ASSERT_EQ(game.countLifeAround(3, 3), 0);
+    ASSERT_EQ(game.countLifeAround(4, 0), 0);
+    ASSERT_EQ(game.countLifeAround(0, 4), 0);
 }
 
 TEST(CountLife, CountLooping) {
