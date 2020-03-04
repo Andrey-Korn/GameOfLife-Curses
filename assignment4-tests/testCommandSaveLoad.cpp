@@ -15,7 +15,6 @@ TEST(CommandLoad, loadBad) {
   commandLoad(args, game, stream);
   
   ASSERT_EQ(stream.str(), "Cannot load file \"doesntExist.fld\"\n");
-  //ASSERT_EQ(file.is_open(), False);
 }
 
 //save a test file
@@ -27,7 +26,6 @@ TEST(CommandSave, saveTest) {
   std::ostringstream stream;
   commandSave(args, game, stream);
   
-  //ASSERT_EQ(file.is_open(), True);
   ASSERT_EQ(stream.str(), "Game field saved to \"testFile1.fld\".\n");
 }
 
@@ -40,7 +38,6 @@ TEST(CommandLoad, loadTest) {
   std::ostringstream stream;
   commandLoad(args, game, stream);
   
-  //ASSERT_EQ(file.is_open(), True);
   ASSERT_EQ(stream.str(), "Game \"testFile1.fld\" loaded successfully.\n");
 }
 
@@ -53,7 +50,6 @@ TEST(CommandSave, saveNone) {
   std::ostringstream stream;
   commandSave(args, game, stream);
   
-  //ASSERT_EQ(file.is_open(), True);
   ASSERT_EQ(stream.str(), "Game field saved to \"game_of_life.fld\".\n");
 }
 
@@ -66,6 +62,5 @@ TEST(CommandLoad, loadNone) {
   std::ostringstream stream;
   commandLoad(args, game, stream);
   
-  //ASSERT_EQ(file.is_open(), True);
   ASSERT_EQ(stream.str(), "Game \"game_of_life.fld\" loaded successfully.\n");
 }

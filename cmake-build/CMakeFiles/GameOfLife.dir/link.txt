@@ -1,0 +1,1 @@
+/bin/c++       CMakeFiles/GameOfLife.dir/game_field.cpp.o CMakeFiles/GameOfLife.dir/game_handler.cpp.o CMakeFiles/GameOfLife.dir/main.cpp.o CMakeFiles/GameOfLife.dir/view_handler.cpp.o  -o GameOfLife -rdynamic -lcurses -lform 
