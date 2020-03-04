@@ -116,6 +116,9 @@ class ViewHandler {
 
 class GameManager {
  public:
+  size_t cursorX = 0;
+  size_t cursorY = 0;
+
   GameManager(size_t width, size_t height, ViewHandler& viewHandler);
 
   GameManager(const GameField& field, ViewHandler& viewHandler)
@@ -185,6 +188,17 @@ class GameManager {
 
   ViewHandler& getViewHandler();
 
+  /**
+   * Catch mouse clicks.
+   */
+  void onMousePressed(int x, int y);
+
+  /**
+   * Catch key presses.
+   */
+  void onKeyPressed(int key);
+
+
  private:
   size_t width;
   size_t height;
@@ -203,8 +217,8 @@ class GameManager {
   bool hasUndo = false;  // Is it possible to cancel at this step
 
   // Keyboard cursor on field position
-  size_t cursorX = 0;
-  size_t cursorY = 0;
+  // size_t cursorX = 0;
+  // size_t cursorY = 0;
 
   /**
    * Forces the update view handler without making any changes to the state of
@@ -232,12 +246,12 @@ class GameManager {
   /**
    * Catch mouse clicks.
    */
-  void onMousePressed(int x, int y);
+  // void onMousePressed(int x, int y);
 
   /**
    * Catch key presses.
    */
-  void onKeyPressed(int key);
+  // void onKeyPressed(int key);
 
   /**
    * Manages the cursor to set the cells on the field using the arrows on the
