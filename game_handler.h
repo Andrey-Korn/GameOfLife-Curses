@@ -166,6 +166,17 @@ class GameManager {
                        void (*cmd)(const std::vector<std::string>&,
                                    GameManager&,
                                    std::ostream&));
+  
+  /**
+   * Execute command by name.
+   * @param name Command name.
+   * @param args Command arguments.
+   *
+   * @return true, if command successfully executed.
+   */
+  bool executeCommand(const std::string& name,
+                      const std::vector<std::string>& args,
+                      std::ostream& output);
 
   /**
    * Counts the number of living cells around this cell.
@@ -231,17 +242,6 @@ class GameManager {
    * After the execution of the command goes into normal mode.
    */
   void executionInCommandMode();
-
-  /**
-   * Execute command by name.
-   * @param name Command name.
-   * @param args Command arguments.
-   *
-   * @return true, if command successfully executed.
-   */
-  bool executeCommand(const std::string& name,
-                      const std::vector<std::string>& args,
-                      std::ostream& output);
 
   /**
    * Catch mouse clicks.
@@ -435,6 +435,15 @@ static void commandLoad(const std::vector<std::string>& args,
   }
 
   out << "Game \"" << filename << "\" loaded successfully." << std::endl;
+}
+
+static std::vector<std::string> splitString(const std::string& str) {
+  std::istringstream input(str);
+  std::string item;
+  std::vector<std::string> items;
+  while (std::getline(input, item, ' '))
+    items.push_back(item);
+  return items;
 }
 
 #endif /* GAME_HANDLER_H */

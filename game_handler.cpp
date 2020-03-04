@@ -166,15 +166,6 @@ bool GameManager::executeCommand(const std::string& name,
   return true;
 }
 
-static std::vector<std::string> splitString(const std::string& str) {
-  std::istringstream input(str);
-  std::string item;
-  std::vector<std::string> items;
-  while (std::getline(input, item, ' '))
-    items.push_back(item);
-  return items;
-}
-
 void GameManager::executionInCommandMode() {
   const std::string commandInput(viewHandler.readCommandInput());
   std::vector<std::string> split(splitString(commandInput));
