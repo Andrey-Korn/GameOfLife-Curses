@@ -2,7 +2,7 @@
 
 #include "game_field.h"
 
-TEST(GameField, cellPlacement){
+TEST(GameField, blankField){
     // create a blank field of a size of 10 x 10 
     GameField field(10, 10);
 
