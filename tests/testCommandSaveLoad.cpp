@@ -5,7 +5,6 @@
 
 #include "mockViewHandler.cpp"
 
-//load a file that doesn't exist
 TEST(SaveLoad, loadBad) {
   MockViewHandler mockViewHandler;
   GameManager game(10, 10, mockViewHandler);
@@ -17,7 +16,6 @@ TEST(SaveLoad, loadBad) {
   ASSERT_EQ(stream.str(), "Cannot load file \"doesntExist.fld\"\n");
 }
 
-//save a test file
 TEST(SaveLoad, createTest) {
   MockViewHandler mockViewHandler;
   GameManager game(10, 10, mockViewHandler);
@@ -29,7 +27,6 @@ TEST(SaveLoad, createTest) {
   ASSERT_EQ(stream.str(), "Game field saved to \"testFile1.fld\".\n");
 }
 
-//load a test file
 TEST(SaveLoad, loadTest) {
   MockViewHandler mockViewHandler;
   GameManager game(10, 10, mockViewHandler);
@@ -41,7 +38,6 @@ TEST(SaveLoad, loadTest) {
   ASSERT_EQ(stream.str(), "Game \"testFile1.fld\" loaded successfully.\n");
 }
 
-//save a file with no name
 TEST(SaveLoad, createEmptyFile) {
   MockViewHandler mockViewHandler;
   GameManager game(10, 10, mockViewHandler);
@@ -53,7 +49,6 @@ TEST(SaveLoad, createEmptyFile) {
   ASSERT_EQ(stream.str(), "Game field saved to \"game_of_life.fld\".\n");
 }
 
-//load a file with no name
 TEST(SaveLoad, loadEmptyFile) {
   MockViewHandler mockViewHandler;
   GameManager game(10, 10, mockViewHandler);

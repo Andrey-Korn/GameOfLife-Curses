@@ -3,7 +3,6 @@
 
 // This class overrides methods that require 
 // ncurses and waiting for user input
-// so we can test without needing graphics
 class MockViewHandler : public ViewHandler {
 public:
     void updateCommandLine(const std::string& commandOutput) override {}

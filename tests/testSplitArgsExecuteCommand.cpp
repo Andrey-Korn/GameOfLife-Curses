@@ -11,7 +11,7 @@ TEST(SplitArgsExecuteCommand, NoArgs) {
   std::vector<std::string> cmdSplit = splitString(cmd);
   std::ostringstream stream;
   game.executeCommand(cmdSplit[0], std::vector<std::string>(cmdSplit.begin() + 1, cmdSplit.end()), stream);
-//   ASSERT_EQ(stream.str(), "test");
+
   ASSERT_EQ(game.getWidth(), 25);
   ASSERT_EQ(game.getHeight(), 25);
 }

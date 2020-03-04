@@ -15,7 +15,7 @@ TEST(CountLife, CountCircle) {
     game.setCellAt(2,0);
     game.setCellAt(2,1);
     game.setCellAt(2,2);
-    game.setCellAt(2,2);    // required to update prev field for countLifeAround
+    game.setCellAt(2,2);
     ASSERT_EQ(game.countLifeAround(1, 1), 8);
 }
 
@@ -74,15 +74,3 @@ TEST(CountLife, CountCorners) {
     game.setCellAt(3, 3);
     ASSERT_EQ(game.countLifeAround(0, 0), 8);
 }
-
-// This test found a bug where the game will segfault if the field is smaller than 3x3 and you try to countLifeAround.
-// It happens both in game, and when testing, so this case is commented out so it doesn't crash the other tests until it is fixed
-
-/**
-TEST(CountLife, CountSmall) {
-    MockViewHandler mockViewHandler;
-    GameManager game(1, 1, mockViewHandler);
-    game.setCellAt(0, 0);
-    ASSERT_EQ(game.countLifeAround(0, 0), 0);
-}
-*/
