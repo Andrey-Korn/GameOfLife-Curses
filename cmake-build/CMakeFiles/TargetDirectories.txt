@@ -1,2 +1,0 @@
-/nfs/stak/users/robeshel/cs362/GameOfLife-Curses/cmake-build/CMakeFiles/Assignment4Test.dir
-/nfs/stak/users/robeshel/cs362/GameOfLife-Curses/cmake-build/CMakeFiles/GameOfLife.dir
