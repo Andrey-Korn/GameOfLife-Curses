@@ -1,5 +1,3 @@
-#  Assignment 4: Automated Testing
-
 ## Build and Run Tests
 
 **CMake is required for build! Follow instructions below to install**
