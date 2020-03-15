@@ -288,16 +288,31 @@ static const size_t DEATH_OVERPOPULATION = 3;
 static void commandReset(const std::vector<std::string>& args,
                          GameManager& game,
                          std::ostream& out) {
-  if (args.size() != 2) {
+  if (args.size() > 2) {
     if (game.canCreateFieldWithSizes(game.getWidth(), game.getHeight()))
+    {
       game.reset(game.getCurrentField(), game.getWidth(), game.getHeight());
-    else {
+    }
+    else
+    {
       out << "Cannot place game field on this terminal size." << std::endl;
       return;
     }
-  } else {
-    int width = stoi(args[0]);
-    int height = stoi(args[1]);
+  }
+  else
+  {
+    int width;
+    int height;
+    
+    if (args.size() == 1) {
+      width = stoi(args[0]);
+      height = stoi(args[0]);
+    }
+    else {
+      width = stoi(args[0]);
+      height = stoi(args[1]);
+    }
+
     if (game.canCreateFieldWithSizes(width, height))
       game.reset(game.getCurrentField(), width, height);
     else {
@@ -305,8 +320,8 @@ static void commandReset(const std::vector<std::string>& args,
       return;
     }
   }
-  out << "Field reseted to size " << game.getWidth() << "x" << game.getHeight()
-      << "" << std::endl;
+  out << "Field reset to size " << game.getWidth() << "x" << game.getHeight()
+      << "y" << std::endl;
 }
 
 /**
