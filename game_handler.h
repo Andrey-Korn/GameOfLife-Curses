@@ -138,16 +138,11 @@ class GameManager {
    */
   bool setCellAt(int posX, int posY);
 
-  /**
+   /**
    * Clears the field, resets the steps counter and creates a field with new
    * dimensions.
    */
-  void reset(size_t width, size_t height);
-
-  /**
-   * Sets new field and resets the steps counter.
-   */
-  void reset(const GameField& field);
+  void reset(const GameField& field, size_t width = 0, size_t height = 0);
 
   /**
    * Cancels last step.
