@@ -290,7 +290,7 @@ static void commandReset(const std::vector<std::string>& args,
                          std::ostream& out) {
   if (args.size() != 2) {
     if (game.canCreateFieldWithSizes(game.getWidth(), game.getHeight()))
-      game.reset(game.getWidth(), game.getHeight());
+      game.reset(game.getCurrentField(), game.getWidth(), game.getHeight());
     else {
       out << "Cannot place game field on this terminal size." << std::endl;
       return;
@@ -299,7 +299,7 @@ static void commandReset(const std::vector<std::string>& args,
     int width = stoi(args[0]);
     int height = stoi(args[1]);
     if (game.canCreateFieldWithSizes(width, height))
-      game.reset(width, height);
+      game.reset(game.getCurrentField(), width, height);
     else {
       out << "Cannot place game field on this terminal size." << std::endl;
       return;
