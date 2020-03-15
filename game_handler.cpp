@@ -219,6 +219,7 @@ void GameManager::onMousePressed(int x, int y) {
 }
 
 void GameManager::onKeyPressed(int key) {
+  GameManager game(0, 0, viewHandler);
   switch (key) {
     case KEY_N:
       nextStep();
@@ -230,7 +231,7 @@ void GameManager::onKeyPressed(int key) {
       break;
     case KEY_R:
       viewHandler.updateCommandLine("Field reseted.");
-      reset(width, height);
+      reset(game.getCurrentField(), width, height);
       break;
     case KEY_C:
       executionInCommandMode();
