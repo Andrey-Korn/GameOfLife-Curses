@@ -99,27 +99,20 @@ bool GameManager::setCellAt(int posX, int posY) {
   return gameField[posX][posY].isLife();
 }
 
-void GameManager::reset(const GameField& field, size_t width, size_t height) {
-  if(this->width && this->height) {
-    this->width = width;
-    this->height = height;
-    gameField = GameField(width, height);
-    hasUndo = false;
-    stepsCounter = 0;
-    cursorY = cursorX = 0;
-    viewHandler.updateKeyboardCursor(cursorX, cursorY);
-    update();
-  }
-  else if(field.getWidth() != 0) {
-    width = field.getWidth();
-    height = field.getHeight();
-    gameField = GameField(field);
-    hasUndo = false;
-    stepsCounter = 0;
-    cursorY = cursorX = 0;
-    viewHandler.updateKeyboardCursor(cursorX, cursorY);
-    update();
-  }
+void GameManager::reset(size_t width, size_t height) {
+  gameField = GameField(width, height);
+  reset(gameField);
+}
+
+void GameManager::reset(const GameField& field) {
+  width = field.getWidth();
+  height = field.getHeight();
+  gameField = GameField(field);
+  hasUndo = false;
+  stepsCounter = 0;
+  cursorY = cursorX = 0;
+  viewHandler.updateKeyboardCursor(cursorX, cursorY);
+  update();
 }
 
 bool GameManager::stepBack() {
