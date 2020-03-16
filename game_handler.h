@@ -146,7 +146,8 @@ class GameManager {
    * Clears the field, resets the steps counter and creates a field with new
    * dimensions.
    */
-  void reset(const GameField& field, size_t width = 0, size_t height = 0);
+  void reset(const GameField& field);
+  void reset(size_t width = 0, size_t height = 0);
 
   /**
    * Cancels last step.
@@ -298,7 +299,7 @@ static void commandReset(const std::vector<std::string>& args,
   if (args.size() > 2 || args.size() == 0) {
     if (game.canCreateFieldWithSizes(game.getWidth(), game.getHeight()))
     {
-      game.reset(game.getCurrentField(), game.getWidth(), game.getHeight());
+      game.reset(game.getWidth(), game.getHeight());
     }
     else
     {
@@ -325,7 +326,7 @@ static void commandReset(const std::vector<std::string>& args,
     }
 
     if (game.canCreateFieldWithSizes(width, height))
-      game.reset(game.getCurrentField(), width, height);
+      game.reset(width, height);
     else {
       out << "Cannot place game field on this terminal size." << std::endl;
       return;
