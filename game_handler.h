@@ -295,7 +295,7 @@ static const size_t DEATH_OVERPOPULATION = 3;
 static void commandReset(const std::vector<std::string>& args,
                          GameManager& game,
                          std::ostream& out) {
-  if (args.size() > 2) {
+  if (args.size() > 2 || args.size() == 0) {
     if (game.canCreateFieldWithSizes(game.getWidth(), game.getHeight()))
     {
       game.reset(game.getCurrentField(), game.getWidth(), game.getHeight());
@@ -310,14 +310,18 @@ static void commandReset(const std::vector<std::string>& args,
   {
     int width;
     int height;
-    
-    if (args.size() == 1) {
-      width = stoi(args[0]);
-      height = stoi(args[0]);
-    }
-    else {
-      width = stoi(args[0]);
-      height = stoi(args[1]);
+    try {
+      if (args.size() == 1) {
+        width = stoi(args[0]);
+        height = stoi(args[0]);
+      }
+      else {
+        width = stoi(args[0]);
+        height = stoi(args[1]);
+      }
+    } catch(std::invalid_argument& e) {
+      out << "Invalid arguments" << std::endl;
+      return;
     }
 
     if (game.canCreateFieldWithSizes(width, height))
@@ -328,7 +332,7 @@ static void commandReset(const std::vector<std::string>& args,
     }
   }
   out << "Field reset to size " << game.getWidth() << "x" << game.getHeight()
-      << "y" << std::endl;
+      << std::endl;
 }
 
 /**
@@ -342,11 +346,13 @@ static void commandSet(const std::vector<std::string>& args,
     out << "Need args: <pos X> <pos Y>" << std::endl;
     return;
   }
-  int posX = atoi(args[0].c_str());
-  int posY = atoi(args[1].c_str());
-
-  out << "Cell " << (game.setCellAt(posX, posY) ? "spawned." : "killed.")
-      << std::endl;
+  try {
+    int posX = stoi(args[0]);
+    int posY = stoi(args[1]);
+    out << "Cell " << (game.setCellAt(posX, posY) ? "spawned." : "killed.") << std::endl;
+  } catch(std::invalid_argument& e) {
+    out << "Need args: <pos X> <pos Y>" << std::endl;
+  }
 }
 
 /**
@@ -363,7 +369,12 @@ static void commandStep(const std::vector<std::string>& args,
     if (args[0] == "-")
       isInfinity = true;
     else
-      steps = stoi(args[0]);
+      try {
+        steps = stoi(args[0]);
+      } catch(std::invalid_argument& e) {
+        out << "Invalid Argument" << std::endl;
+        return;
+      }
   }
 
   game.getViewHandler().updateCommandLine(

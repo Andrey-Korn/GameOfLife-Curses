@@ -24,7 +24,7 @@ TEST(SplitArgsExecuteCommand, ResetArgs) {
   std::vector<std::string> cmdSplit = splitString(cmd);
   std::ostringstream stream;
   game.executeCommand(cmdSplit[0], std::vector<std::string>(cmdSplit.begin() + 1, cmdSplit.end()), stream);
-  ASSERT_EQ(stream.str(), "Field reseted to size 10x10\n");
+  ASSERT_EQ(stream.str(), "Field reset to size 10x10\n");
   ASSERT_EQ(game.getWidth(), 10);
   ASSERT_EQ(game.getHeight(), 10);
 }
@@ -48,23 +48,24 @@ TEST(SplitArgsExecuteCommand, ResetWrongArg) {
   std::vector<std::string> cmdSplit = splitString(cmd);
   std::ostringstream stream;
   game.executeCommand(cmdSplit[0], std::vector<std::string>(cmdSplit.begin() + 1, cmdSplit.end()), stream);
-  ASSERT_EQ(stream.str(), "Field reseted to size 10x10\n");
+  ASSERT_EQ(stream.str(), "Invalid arguments\n");
 }
 
 TEST(SplitArgsExecuteCommand, SetWrongArgs) {
   MockViewHandler viewhandler;
   GameManager game(25, 25, viewhandler);
-  std::string cmds[3] = {"set j 5", "set 5 j", "set j j"};
+  std::string cmds[4] = {"set j 5", "set 5 j", "set j j", "set 5 5"};
 
-  for(int i = 0; i < 3; i++) {
+  for(int i = 0; i < 4; i++) {
     std::vector<std::string> cmdSplit = splitString(cmds[i]);
     std::ostringstream stream;
     game.executeCommand(cmdSplit[0], std::vector<std::string>(cmdSplit.begin() + 1, cmdSplit.end()), stream);
   }
 
-  ASSERT_TRUE(game.getCurrentField()[0][0].isLife());
-  ASSERT_TRUE(game.getCurrentField()[0][5].isLife());
-  ASSERT_TRUE(game.getCurrentField()[5][0].isLife());
+  ASSERT_FALSE(game.getCurrentField()[0][0].isLife());
+  ASSERT_FALSE(game.getCurrentField()[0][5].isLife());
+  ASSERT_FALSE(game.getCurrentField()[5][0].isLife());
+  ASSERT_TRUE(game.getCurrentField()[5][5].isLife());
 }
 
 TEST(SplitArgsExecuteCommand, InvalidCmd) {
@@ -77,7 +78,7 @@ TEST(SplitArgsExecuteCommand, InvalidCmd) {
   ASSERT_FALSE(game.executeCommand(cmdSplit[0], std::vector<std::string>(cmdSplit.begin() + 1, cmdSplit.end()), stream));
 }
 
-TEST(SplitArgsExecuteCommand, StepWrongArgsThrow) {
+TEST(SplitArgsExecuteCommand, StepWrongArgsNoThrow) {
   MockViewHandler viewhandler;
   GameManager game(25, 25, viewhandler);
   std::string cmd = "step j";
@@ -85,5 +86,5 @@ TEST(SplitArgsExecuteCommand, StepWrongArgsThrow) {
   std::vector<std::string> cmdSplit = splitString(cmd);
   std::ostringstream stream;
 
-  ASSERT_THROW(game.executeCommand(cmdSplit[0], std::vector<std::string>(cmdSplit.begin() + 1, cmdSplit.end()), stream), std::invalid_argument);
+  ASSERT_NO_THROW(game.executeCommand(cmdSplit[0], std::vector<std::string>(cmdSplit.begin() + 1, cmdSplit.end()), stream));
 }

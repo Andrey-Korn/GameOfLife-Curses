@@ -29,8 +29,8 @@ TEST(CommandReset, OneInput) {
   GameManager game(10, 10, catcher);
   std::vector<std::string> args = {"3"};
   commandReset(args, game, std::cout);
-  ASSERT_EQ(game.getWidth(), 10);
-  ASSERT_EQ(game.getHeight(), 10);
+  ASSERT_EQ(game.getWidth(), 3);
+  ASSERT_EQ(game.getHeight(), 3);
 }
 
 TEST(CommandReset, NoInput) {
