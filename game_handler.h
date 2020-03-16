@@ -20,6 +20,8 @@
 
 #include "game_field.h"
 
+static const int MAX_BACKSTEP = 100;
+
 class InputResult {
  public:
   /**
@@ -125,8 +127,10 @@ class GameManager {
       : width(field.getWidth()),
         height(field.getHeight()),
         gameField(field),
-        previousStep(GameField(0, 0)),
-        viewHandler(viewHandler) {}
+        previousStep(GameField()),
+        viewHandler(viewHandler) {
+          previousStepArr[0] = GameField();
+        }
 
   int runGame();
 
@@ -216,10 +220,13 @@ class GameManager {
 
   GameField gameField;
   GameField previousStep;
+  GameField previousStepArr[MAX_BACKSTEP];
 
   ViewHandler& viewHandler;
 
+  size_t prevCounter = 0;
   size_t stepsCounter = 0;
+  size_t minPrevIdx = 0;
   bool hasUndo = false;  // Is it possible to cancel at this step
 
   // Keyboard cursor on field position

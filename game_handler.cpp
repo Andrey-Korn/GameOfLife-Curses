@@ -22,9 +22,10 @@ static const int KEY_ENTER = 10;
 GameManager::GameManager(size_t width, size_t height, ViewHandler& viewHandler)
     : width(width),
       height(height),
-      gameField(GameField(width, height)),
       viewHandler(viewHandler),
-      previousStep(GameField(0, 0)) {
+      gameField(GameField(width, height)),
+      previousStep(GameField())
+      {
   registerCommand("reset", &commandReset);
   registerCommand("set", &commandSet);
   registerCommand("step", &commandStep);
@@ -61,24 +62,34 @@ int GameManager::runGame() {
 }
 
 void GameManager::nextStep() {
-  previousStep = gameField;
+  previousStepArr[prevCounter] = gameField;
+  
   for (int i = 0; i < width; i++) {
     for (int j = 0; j < height; j++) {
       size_t life = countLifeAround(i, j);
-      bool hasLife = previousStep[i][j].isLife();
+      bool hasLife = previousStepArr[prevCounter][i][j].isLife();
       if (hasLife && (life < DEATH_LONELINESS || life > DEATH_OVERPOPULATION))
         gameField[i][j].kill();
       else if (!hasLife && life == BORN_LIFE)
         gameField[i][j].bornLife();
     }
   }
+
+  if(prevCounter == minPrevIdx)
+    minPrevIdx++;
+  
+  prevCounter++;
+  if (prevCounter >= MAX_BACKSTEP){
+    prevCounter = 0;
+  }
+  minPrevIdx = minPrevIdx % MAX_BACKSTEP;
   stepsCounter++;
   hasUndo = true;
   update();
 }
 
 bool GameManager::setCellAt(int posX, int posY) {
-  previousStep = gameField;
+  previousStepArr[prevCounter] = gameField;
   if (gameField[posX][posY].isLife())
     gameField[posX][posY].kill();
   else
@@ -112,16 +123,30 @@ void GameManager::reset(const GameField& field, size_t width, size_t height) {
 }
 
 bool GameManager::stepBack() {
-  if (!hasUndo)
+  // if (!hasUndo)
+  //   return false;
+
+  // gameField = previousStep;
+  // hasUndo = false;
+  // if (stepsCounter)
+  //   stepsCounter--;
+  // update();
+
+  // return true;
+  // std::cout << prevCounter << "     " << minPrevIdx << std::endl; 
+  if (stepsCounter == 0 || minPrevIdx == prevCounter - 1)
     return false;
+  stepsCounter--;
 
-  gameField = previousStep;
-  hasUndo = false;
-  if (stepsCounter)
-    stepsCounter--;
+  prevCounter--;
+  if(prevCounter >= MAX_BACKSTEP)
+    prevCounter = MAX_BACKSTEP - 1;
+  
+  gameField = previousStepArr[prevCounter];
+
   update();
-
   return true;
+
 }
 
 size_t GameManager::countLifeAround(int posX, int posY) const {
@@ -132,16 +157,16 @@ size_t GameManager::countLifeAround(int posX, int posY) const {
 
   size_t lifes = 0;  // Number of living cells around
 
-  lifes += previousStep[posX - 1][posY].isLife() ? 1 : 0;  // 2-1
-  lifes += previousStep[posX + 1][posY].isLife() ? 1 : 0;  // 2-3
+  lifes += previousStepArr[prevCounter][posX - 1][posY].isLife() ? 1 : 0;  // 2-1
+  lifes += previousStepArr[prevCounter][posX + 1][posY].isLife() ? 1 : 0;  // 2-3
 
   // 1-1 -> 1-3
   for (int i = posX - 1; i <= posX + 1; i++)
-    lifes += previousStep[i][posY - 1].isLife() ? 1 : 0;
+    lifes += previousStepArr[prevCounter][i][posY - 1].isLife() ? 1 : 0;
 
   // 3-1 -> 3-3
   for (int i = posX - 1; i <= posX + 1; i++)
-    lifes += previousStep[i][posY + 1].isLife() ? 1 : 0;
+    lifes += previousStepArr[prevCounter][i][posY + 1].isLife() ? 1 : 0;
 
   return lifes;
 }

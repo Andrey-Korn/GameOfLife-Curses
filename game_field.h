@@ -32,6 +32,9 @@ class GameField {
   GameField(const GameField& toCopy)
       : width(toCopy.width), height(toCopy.height), field(toCopy.field) {}
 
+  GameField() {
+    GameField(0, 0);
+  }
   /**
    * Parse string and creates field from it.
    * Living Cell: '#'
